@@ -1,4 +1,4 @@
-package april_18;
+package lotte;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -72,10 +72,9 @@ public class LotteWorld {
 		}
 		return age;
 	}
-
 	
 	//////////가격 계산
-	int getPrice() {
+	private int getPrice() {
 		int[][] priceList = {
 			{62000, 54000, 47000, 15000, 47000}, // 주간 종합이용권 , 왼쪽부터 어른, 청소년, 어린이, 유아, 노인 순 
 			{50000, 43000, 36000, 15000, 36000}, // 야간 종합이용권
@@ -99,7 +98,7 @@ public class LotteWorld {
 	}
 	
 	//////////하나의 주문이 끝날때마다 csv파일에 한줄씩 기록 
-	void writeIt() {
+	private void writeIt() {
 		String[] dayOrNightList = {"주간", "야간"}; // 숫자형태로 저장되어있는 선택지들을 문자열로 바꿔서 기록하기위함 
 		String[] typeList = {"종합이용권", "파크이용권"};
 		String[] ageList = {"성인", "청소년", "어린이", "유아", "노인"};
@@ -114,13 +113,12 @@ public class LotteWorld {
 	}
 	
 	////////// 기록된 csv파일에서 데이터를 불러와서 총 결과창을 출력
-	void readIt(){
+	private void readIt(){
 		String line;
 		System.out.print("========================== 롯데월드 ==========================\n");
 	
 		try {
 			br.readLine();
-		
 			while ((line = br.readLine()) != null) { // 더이상 안읽힐때까지 
 				String[] data = line.split(",");
 				System.out.printf("%-5s %8s %6s X %-3s %8s원   *우대적용 %-8s\n", data[1], data[2], data[3], data[4], data[5], data[6]);		
@@ -132,6 +130,7 @@ public class LotteWorld {
 		}
 	}
 
+	
 	////////// 메인함수
 	public static void main(String[] args) throws IOException {
 		br = new BufferedReader(new FileReader(fileName));
@@ -163,5 +162,3 @@ public class LotteWorld {
 	}
 
 }
-
-
