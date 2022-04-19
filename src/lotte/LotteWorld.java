@@ -1,10 +1,6 @@
 package lotte;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,7 +13,6 @@ public class LotteWorld {
 	static String fileName= "C:\\Users\\user\\Documents\\LotteReport.csv";
 	static File file = new File(fileName);
 	static FileWriter fw;
-	static BufferedReader br;
 	static Scanner sc = new Scanner(System.in);
 	
 	OrderData orderItem;
@@ -34,18 +29,18 @@ public class LotteWorld {
 		do {
 			System.out.print("시간대를 선택하세요.\n1. 주간권\n2. 야간권 (4시 이후 입장시)\n-> ");
 			orderItem.dayOrNight = sc.nextInt();
-			if (orderItem.dayOrNight != 1 && orderItem.dayOrNight != 2) {
+			if (orderItem.dayOrNight != Staticvalue.DAYORNIGHT_DAY && orderItem.dayOrNight != Staticvalue.DAYORNIGHT_NIGHT) {
 				errorMsg();
 			}
-		} while (orderItem.dayOrNight != 1 && orderItem.dayOrNight != 2);
+		} while (orderItem.dayOrNight != Staticvalue.DAYORNIGHT_DAY && orderItem.dayOrNight != Staticvalue.DAYORNIGHT_NIGHT);
 		
 		do {
 			System.out.print("\n권종을 선택하세요.\n1. 종합이용권 (롯데월드 + 민속박물관)\n2. 파크이용권 (롯데월드)\n-> ");
 			orderItem.type = sc.nextInt();
-			if (orderItem.type != 1 && orderItem.type != 2) {
+			if (orderItem.type != Staticvalue.TYPE_ALL && orderItem.type != Staticvalue.TYPE_PARK) {
 				errorMsg();
 			}
-		} while (orderItem.type != 1 && orderItem.type != 2);
+		} while (orderItem.type != Staticvalue.TYPE_ALL && orderItem.type != Staticvalue.TYPE_PARK);
 		
 		sc.nextLine();
 		do {  //주민번호 뒷자리 첫글자가 1~4가 아니면 다시입력해라. 
@@ -53,10 +48,10 @@ public class LotteWorld {
 			ssn = Integer.parseInt(sc.nextLine().substring(0,7));
 			ssn_t = ssn % 10;
 			ssn /= 10;
-			if (ssn_t < 1 || ssn_t > 4) {
+			if (ssn_t < Staticvalue.SSN_T_MIN || ssn_t > Staticvalue.SSN_T_MAX) {
 				errorMsg();
 			}
-		} while (ssn_t < 1 || ssn_t > 4);
+		} while (ssn_t < Staticvalue.SSN_T_MIN || ssn_t > Staticvalue.SSN_T_MAX);
 		
 		do {
 			System.out.print("\n몇개를 주문하시겠습니까? (최대 10개)\n-> ");
@@ -70,10 +65,10 @@ public class LotteWorld {
 		do {
 			System.out.print("\n우대사항을 선택하세요.\n1. 없음 (나이 우대는 자동처리)\n2. 장애인\n3. 국가유공자\n4. 휴가장병\n5. 임산부\n6. 다자녀\n-> ");
 			orderItem.discount = sc.nextInt();
-			if (orderItem.discount < 1 || orderItem.discount > 6) {
+			if (orderItem.discount < Staticvalue.DISCOUNT_MIN || orderItem.discount > Staticvalue.DISCOUNT_MAX) {
 				errorMsg();
 			}
-		} while (orderItem.discount < 1 || orderItem.discount > 6);
+		} while (orderItem.discount < Staticvalue.DISCOUNT_MIN || orderItem.discount > Staticvalue.DISCOUNT_MAX);
 	}
 
 	//////////만나이 구한뒤 어른/어린이/청소년 여부 파악 
@@ -107,21 +102,21 @@ public class LotteWorld {
 	//////////가격 계산
 	private void getPrice() {
 		int[][] priceList = {
-			{62000, 54000, 47000, 15000, 47000}, // 주간 종합이용권 , 왼쪽부터 어른, 청소년, 어린이, 유아, 노인 순 
-			{50000, 43000, 36000, 15000, 36000}, // 야간 종합이용권
-			{59000, 52000, 46000, 15000, 46000}, // 주간 파크이용권 
-			{47000, 41000, 35000, 15000, 35000}  // 야간 파크이용권 
+				{15000, 47000, 54000, 62000, 47000}, // 주간 종합이용권, 왼쪽부터 유아, 어린이, 청소년, 어른, 노인 순 
+				{15000, 36000, 43000, 50000, 36000}, // 야간 종합이용권
+				{15000, 46000, 52000, 59000, 46000}, // 주간 파크이용권 
+				{15000, 35000, 41000, 47000, 35000}  // 야간 파크이용권 
 		};
 		
 		orderItem.price = priceList[orderItem.dayOrNight + 2 * orderItem.type - 3][orderItem.age] * orderItem.number; //해당하는 가격을 priceList에서 뽑아온후 갯수를 곱함 
 		
-		if (orderItem.discount == 2 || orderItem.discount == 3) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
+		if (orderItem.discount == Staticvalue.DISCOUNT_DISABLED || orderItem.discount == Staticvalue.DISCOUNT_VETERAN) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
 			orderItem.price = orderItem.price / 2; 
-		} else if (orderItem.discount == 4 && orderItem.type == 1) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
+		} else if (orderItem.discount == Staticvalue.DISCOUNT_SOLDIER && orderItem.type == Staticvalue.TYPE_ALL) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
 			orderItem.price = orderItem.price / 2 + 500;
-		} else if (orderItem.discount == 5 && orderItem.type == 1) { // 임산부 종합이용권 50% 우대
+		} else if (orderItem.discount == Staticvalue.DISCOUNT_PREGNANT && orderItem.type == Staticvalue.TYPE_ALL) { // 임산부 종합이용권 50% 우대
 			orderItem.price = orderItem.price / 2;
-		} else if (orderItem.discount == 6 && orderItem.type == 1) { // 다자녀 종합이용권 30% 우대 
+		} else if (orderItem.discount == Staticvalue.DISCOUNT_MULTICHILDS && orderItem.type == Staticvalue.TYPE_ALL) { // 다자녀 종합이용권 30% 우대 
 			orderItem.price = (int)(orderItem.price * 0.7);
 		}
 		sum += orderItem.price; // 나중에 모든 인원의 주문이 끝났을때 출력하기위한 가격총합 
@@ -142,12 +137,12 @@ public class LotteWorld {
 		}
 		
 		inputDataInArray();
-		
 	}
-	
+		
+	////////// 주문 결과 출력
 	private void printIt() {
-		String line;
-		System.out.print("======================= 롯데월드 =======================\n");
+		System.out.println("\n티켓 발권을 종료합니다. 감사합니다.");
+		System.out.println("\n======================= 롯데월드 =======================");
 		int i = 0;
 		for (i = 0; i < orderList.size(); i++) {
 			if (orderList.get(i).dayOrNight == 1) {
@@ -193,25 +188,21 @@ public class LotteWorld {
 		}
 		System.out.printf("\n입장료 총액은 %d원 입니다.\n", sum);
 		System.out.print("======================================================");
-		
-		
 	}
 
 	private void inputDataInArray() {
 		orderList.add(orderItem);
 	}
 	
-	
 	////////// 메인함수
 	public static void main(String[] args) throws IOException {
-		br = new BufferedReader(new FileReader(fileName));
 		LotteWorld lw = new LotteWorld();
-		
 		int anotherOne, anotherOrder = 0;
 		
 		do { // 새로운주문을 받는 반복문 
 			fw = new FileWriter(file);
 			fw.write("날짜,시간대,권종,연령구분,수량,가격,우대사항\n");
+			
 			do {
 				lw.printMenu();
 				lw.getAge();
@@ -222,15 +213,12 @@ public class LotteWorld {
 				anotherOne = sc.nextInt();
 			} while (anotherOne != 2); // 하나의 주문 안에서 다른 사람을 받는 반복문 
 			
-			System.out.print("\n티켓 발권을 종료합니다. 감사합니다.\n\n");
-			fw.flush();
 			lw.printIt();
 			
 			System.out.print("\n\n계속 진행 (1: 새로운 주문, 2: 프로그램 종료) : ");
 			anotherOrder = sc.nextInt();
 		} while (anotherOrder != 2);
 		fw.close();
-		br.close();
 	}
 
 }
