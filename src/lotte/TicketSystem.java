@@ -29,18 +29,18 @@ public class TicketSystem {
 		do {
 			System.out.print("시간대를 선택하세요.\n1. 주간권\n2. 야간권 (4시 이후 입장시)\n-> ");
 			orderItem.setDayOrNight(sc.nextInt());
-			if (orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_DAY && orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_NIGHT) {
+			if (orderItem.getDayOrNight() != Staticvalue.getDAYORNIGHT_DAY() && orderItem.getDayOrNight() != Staticvalue.getDAYORNIGHT_NIGHT()) {
 				errorMsg();
 			}
-		} while (orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_DAY && orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_NIGHT);
+		} while (orderItem.getDayOrNight() != Staticvalue.getDAYORNIGHT_DAY() && orderItem.getDayOrNight() != Staticvalue.getDAYORNIGHT_NIGHT());
 		
 		do {
 			System.out.print("\n권종을 선택하세요.\n1. 종합이용권 (롯데월드 + 민속박물관)\n2. 파크이용권 (롯데월드)\n-> ");
 			orderItem.setType(sc.nextInt());
-			if (orderItem.getType() != Staticvalue.TYPE_ALL && orderItem.getType() != Staticvalue.TYPE_PARK) {
+			if (orderItem.getType() != Staticvalue.getTYPE_ALL() && orderItem.getType() != Staticvalue.getTYPE_PARK()) {
 				errorMsg();
 			}
-		} while (orderItem.getType() != Staticvalue.TYPE_ALL && orderItem.getType() != Staticvalue.TYPE_PARK);
+		} while (orderItem.getType() != Staticvalue.getTYPE_ALL() && orderItem.getType() != Staticvalue.getTYPE_PARK());
 		
 		sc.nextLine();
 		do {  //주민번호 뒷자리 첫글자가 1~4가 아니면 다시입력해라. 
@@ -48,10 +48,10 @@ public class TicketSystem {
 			ssn = Integer.parseInt(sc.nextLine().substring(0,7));
 			ssn_t = ssn % 10;
 			ssn /= 10;
-			if (ssn_t < Staticvalue.SSN_T_MIN || ssn_t > Staticvalue.SSN_T_MAX) {
+			if (ssn_t < Staticvalue.getSSN_T_MIN() || ssn_t > Staticvalue.getSSN_T_MAX()) {
 				errorMsg();
 			}
-		} while (ssn_t < Staticvalue.SSN_T_MIN || ssn_t > Staticvalue.SSN_T_MAX);
+		} while (ssn_t < Staticvalue.getSSN_T_MIN() || ssn_t > Staticvalue.getSSN_T_MAX());
 		
 		do {
 			System.out.print("\n몇개를 주문하시겠습니까? (최대 10개)\n-> ");
@@ -65,10 +65,10 @@ public class TicketSystem {
 		do {
 			System.out.print("\n우대사항을 선택하세요.\n1. 없음 (나이 우대는 자동처리)\n2. 장애인\n3. 국가유공자\n4. 휴가장병\n5. 임산부\n6. 다자녀\n-> ");
 			orderItem.setDiscount(sc.nextInt());
-			if (orderItem.getDiscount() < Staticvalue.DISCOUNT_MIN || orderItem.getDiscount() > Staticvalue.DISCOUNT_MAX) {
+			if (orderItem.getDiscount() < Staticvalue.getDISCOUNT_MIN() || orderItem.getDiscount() > Staticvalue.getDISCOUNT_MAX()) {
 				errorMsg();
 			}
-		} while (orderItem.getDiscount() < Staticvalue.DISCOUNT_MIN || orderItem.getDiscount() > Staticvalue.DISCOUNT_MAX);
+		} while (orderItem.getDiscount() < Staticvalue.getDISCOUNT_MIN() || orderItem.getDiscount() > Staticvalue.getDISCOUNT_MAX());
 	}
 
 	//////////만나이 구한뒤 어른/어린이/청소년 여부 파악 
@@ -87,15 +87,15 @@ public class TicketSystem {
 		orderItem.setAge((orderItem.getTimeRN() - ssn) / 10000); // 만나이 
 		
 		if (orderItem.getAge() > 12 && orderItem.getAge() < 19) { // 청소년 13~18세 
-			orderItem.setAge(Staticvalue.AGE_TEEN);
+			orderItem.setAge(Staticvalue.getAGE_TEEN());
 		} else if (orderItem.getAge() > 2 && orderItem.getAge() < 13) { // 어린이 3~12세
-			orderItem.setAge(Staticvalue.AGE_CHILD);
+			orderItem.setAge(Staticvalue.getAGE_CHILD());
 		} else if (orderItem.getAge() < 3) { // 유아 0~2세 
-			orderItem.setAge(Staticvalue.AGE_BABY);
+			orderItem.setAge(Staticvalue.getAGE_BABY());
 		} else if (orderItem.getAge() > 64) { // 노인 65세이상
-			orderItem.setAge(Staticvalue.AGE_ELDER);
+			orderItem.setAge(Staticvalue.getAGE_ELDER());
 		} else { // 성인요금 
-			orderItem.setAge(Staticvalue.AGE_ADULT);
+			orderItem.setAge(Staticvalue.getAGE_ADULT());
 		}
 	}
 	
@@ -110,13 +110,13 @@ public class TicketSystem {
 		
 		orderItem.setPrice(priceList[orderItem.getDayOrNight() + 2 * orderItem.getType() - 3][orderItem.getAge()] * orderItem.getNumber()); //해당하는 가격을 priceList에서 뽑아온후 갯수를 곱함 
 		
-		if (orderItem.getDiscount() == Staticvalue.DISCOUNT_DISABLED || orderItem.getDiscount() == Staticvalue.DISCOUNT_VETERAN) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
+		if (orderItem.getDiscount() == Staticvalue.getDISCOUNT_DISABLED() || orderItem.getDiscount() == Staticvalue.getDISCOUNT_VETERAN()) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
 			orderItem.setPrice(orderItem.getPrice() / 2); 
-		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_SOLDIER && orderItem.getType() == Staticvalue.TYPE_ALL) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
+		} else if (orderItem.getDiscount() == Staticvalue.getDISCOUNT_SOLDIER() && orderItem.getType() == Staticvalue.getTYPE_ALL()) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
 			orderItem.setPrice(orderItem.getPrice() / 2 + 500);
-		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_PREGNANT && orderItem.getType() == Staticvalue.TYPE_ALL) { // 임산부 종합이용권 50% 우대
+		} else if (orderItem.getDiscount() == Staticvalue.getDISCOUNT_PREGNANT() && orderItem.getType() == Staticvalue.getTYPE_ALL()) { // 임산부 종합이용권 50% 우대
 			orderItem.setPrice(orderItem.getPrice() / 2);
-		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_MULTICHILDS && orderItem.getType() == Staticvalue.TYPE_ALL) { // 다자녀 종합이용권 30% 우대 
+		} else if (orderItem.getDiscount() == Staticvalue.getDISCOUNT_MULTICHILDS() && orderItem.getType() == Staticvalue.getTYPE_ALL()) { // 다자녀 종합이용권 30% 우대 
 			orderItem.setPrice((int)(orderItem.getPrice() * 0.7));
 		}
 		sum += orderItem.getPrice(); // 나중에 모든 인원의 주문이 끝났을때 출력하기위한 가격총합 
@@ -157,13 +157,13 @@ public class TicketSystem {
 				System.out.printf("%8s", "파크이용권");
 			}
 			
-			if (orderList.get(i).getAge() == Staticvalue.AGE_BABY) {
+			if (orderList.get(i).getAge() == Staticvalue.getAGE_BABY()) {
 				System.out.printf("%6s", "유아");
-			} else if (orderList.get(i).getAge() == Staticvalue.AGE_CHILD) {
+			} else if (orderList.get(i).getAge() == Staticvalue.getAGE_CHILD()) {
 				System.out.printf("%6s", "어린이");
-			} else if (orderList.get(i).getAge() == Staticvalue.AGE_TEEN) {
+			} else if (orderList.get(i).getAge() == Staticvalue.getAGE_TEEN()) {
 				System.out.printf("%6s", "청소년");
-			} else if (orderList.get(i).getAge() == Staticvalue.AGE_ADULT) {
+			} else if (orderList.get(i).getAge() == Staticvalue.getAGE_ADULT()) {
 				System.out.printf("%6s", "성인");
 			} else {
 				System.out.printf("%6s", "노인");
