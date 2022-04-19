@@ -147,52 +147,52 @@ public class LotteWorld {
 	
 	private void printIt() {
 		String line;
-		System.out.print("========================== 롯데월드 ==========================\n");
+		System.out.print("======================= 롯데월드 =======================\n");
 		int i = 0;
 		for (i = 0; i < orderList.size(); i++) {
 			if (orderList.get(i).dayOrNight == 1) {
-				System.out.printf("%-6s", "주간");
+				System.out.printf("%-4s", "주간");
 			} else {
-				System.out.printf("%-6s", "야간");
+				System.out.printf("%-4s", "야간");
 			}
 			
 			if (orderList.get(i).type == 1) {
-				System.out.printf("%9s", "종합이용권");
+				System.out.printf("%8s", "종합이용권");
 			} else {
-				System.out.printf("%9s", "파크이용권");
+				System.out.printf("%8s", "파크이용권");
 			}
 			
 			if (orderList.get(i).age == Staticvalue.AGE_BABY) {
-				System.out.printf("%7s", "유아");
+				System.out.printf("%6s", "유아");
 			} else if (orderList.get(i).age == Staticvalue.AGE_CHILD) {
-				System.out.printf("%7s", "어린이");
+				System.out.printf("%6s", "어린이");
 			} else if (orderList.get(i).age == Staticvalue.AGE_TEEN) {
-				System.out.printf("%7s", "청소년");
+				System.out.printf("%6s", "청소년");
 			} else if (orderList.get(i).age == Staticvalue.AGE_ADULT) {
-				System.out.printf("%7s", "성인");
+				System.out.printf("%6s", "성인");
 			} else {
-				System.out.printf("%7s", "노인");
+				System.out.printf("%6s", "노인");
 			}
 			
-			System.out.printf(" X %-3d %8d원   *우대적용 ", orderList.get(i).number, orderList.get(i).price);
+			System.out.printf(" X %-2d %8d원   *우대적용 ", orderList.get(i).number, orderList.get(i).price);
 			
 			if (orderList.get(i).discount == 1) {
-				System.out.printf("%7s\n", "없음");
+				System.out.printf("%-7s\n", "없음");
 			} else if (orderList.get(i).discount == 2) {
-				System.out.printf("%7s\n", "장애인");
+				System.out.printf("%-7s\n", "장애인");
 			} else if (orderList.get(i).discount == 3) {
-				System.out.printf("%7s\n", "국가유공자");
+				System.out.printf("%-7s\n", "국가유공자");
 			} else if (orderList.get(i).discount == 4) {
-				System.out.printf("%7s\n", "휴가장병");
+				System.out.printf("%-7s\n", "휴가장병");
 			} else if (orderList.get(i).discount == 5) {
-				System.out.printf("%7s\n", "임산부");
+				System.out.printf("%-7s\n", "임산부");
 			} else {
 				System.out.printf("%7s\n", "다자녀");
 			}
 			
 		}
 		System.out.printf("\n입장료 총액은 %d원 입니다.\n", sum);
-		System.out.print("============================================================");
+		System.out.print("======================================================");
 		
 		
 	}
