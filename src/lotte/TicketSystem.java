@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LotteWorld {
+public class TicketSystem {
 	int ssn, ssn_t, sum;
 	static String fileName= "C:\\Users\\user\\Documents\\LotteReport.csv";
 	static File file = new File(fileName);
@@ -28,19 +28,19 @@ public class LotteWorld {
 		
 		do {
 			System.out.print("시간대를 선택하세요.\n1. 주간권\n2. 야간권 (4시 이후 입장시)\n-> ");
-			orderItem.dayOrNight = sc.nextInt();
-			if (orderItem.dayOrNight != Staticvalue.DAYORNIGHT_DAY && orderItem.dayOrNight != Staticvalue.DAYORNIGHT_NIGHT) {
+			orderItem.setDayOrNight(sc.nextInt());
+			if (orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_DAY && orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_NIGHT) {
 				errorMsg();
 			}
-		} while (orderItem.dayOrNight != Staticvalue.DAYORNIGHT_DAY && orderItem.dayOrNight != Staticvalue.DAYORNIGHT_NIGHT);
+		} while (orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_DAY && orderItem.getDayOrNight() != Staticvalue.DAYORNIGHT_NIGHT);
 		
 		do {
 			System.out.print("\n권종을 선택하세요.\n1. 종합이용권 (롯데월드 + 민속박물관)\n2. 파크이용권 (롯데월드)\n-> ");
-			orderItem.type = sc.nextInt();
-			if (orderItem.type != Staticvalue.TYPE_ALL && orderItem.type != Staticvalue.TYPE_PARK) {
+			orderItem.setType(sc.nextInt());
+			if (orderItem.getType() != Staticvalue.TYPE_ALL && orderItem.getType() != Staticvalue.TYPE_PARK) {
 				errorMsg();
 			}
-		} while (orderItem.type != Staticvalue.TYPE_ALL && orderItem.type != Staticvalue.TYPE_PARK);
+		} while (orderItem.getType() != Staticvalue.TYPE_ALL && orderItem.getType() != Staticvalue.TYPE_PARK);
 		
 		sc.nextLine();
 		do {  //주민번호 뒷자리 첫글자가 1~4가 아니면 다시입력해라. 
@@ -55,28 +55,28 @@ public class LotteWorld {
 		
 		do {
 			System.out.print("\n몇개를 주문하시겠습니까? (최대 10개)\n-> ");
-			orderItem.number = sc.nextInt();
-			if (orderItem.number > 10) {
+			orderItem.setNumber(sc.nextInt());
+			if (orderItem.getNumber() > 10) {
 				errorMsg();
 			}
-		} while (orderItem.number > 10);
+		} while (orderItem.getNumber() > 10);
 		
 		
 		do {
 			System.out.print("\n우대사항을 선택하세요.\n1. 없음 (나이 우대는 자동처리)\n2. 장애인\n3. 국가유공자\n4. 휴가장병\n5. 임산부\n6. 다자녀\n-> ");
-			orderItem.discount = sc.nextInt();
-			if (orderItem.discount < Staticvalue.DISCOUNT_MIN || orderItem.discount > Staticvalue.DISCOUNT_MAX) {
+			orderItem.setDiscount(sc.nextInt());
+			if (orderItem.getDiscount() < Staticvalue.DISCOUNT_MIN || orderItem.getDiscount() > Staticvalue.DISCOUNT_MAX) {
 				errorMsg();
 			}
-		} while (orderItem.discount < Staticvalue.DISCOUNT_MIN || orderItem.discount > Staticvalue.DISCOUNT_MAX);
+		} while (orderItem.getDiscount() < Staticvalue.DISCOUNT_MIN || orderItem.getDiscount() > Staticvalue.DISCOUNT_MAX);
 	}
 
 	//////////만나이 구한뒤 어른/어린이/청소년 여부 파악 
-	private void getAge() {
+	private void calcAge() {
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
 		
-		orderItem.timeRN = Integer.parseInt(now.format(df));
+		orderItem.setTimeRN(Integer.parseInt(now.format(df)));
 		
 		if (ssn_t == 1 || ssn_t == 2) { //ssn_t가 1이나 2면 2000년 이전 출생, 
 			ssn += 19000000; // ssn 은 주민번호 앞자리, 거기에 더한 숫자는 950522를 19950522로 바꿔줌 
@@ -84,23 +84,23 @@ public class LotteWorld {
 			ssn += 20000000; // 020123을 20020123으로 바꾼다. 
 		}
 		
-		orderItem.age = (orderItem.timeRN - ssn) / 10000; // 만나이 
+		orderItem.setAge((orderItem.getTimeRN() - ssn) / 10000); // 만나이 
 		
-		if (orderItem.age > 12 && orderItem.age < 19) { // 청소년 13~18세 
-			orderItem.age = Staticvalue.AGE_TEEN;
-		} else if (orderItem.age > 2 && orderItem.age < 13) { // 어린이 3~12세
-			orderItem.age = Staticvalue.AGE_CHILD;
-		} else if (orderItem.age < 3) { // 유아 0~2세 
-			orderItem.age = Staticvalue.AGE_BABY;
-		} else if (orderItem.age > 64) { // 노인 65세이상
-			orderItem.age = Staticvalue.AGE_ELDER;
+		if (orderItem.getAge() > 12 && orderItem.getAge() < 19) { // 청소년 13~18세 
+			orderItem.setAge(Staticvalue.AGE_TEEN);
+		} else if (orderItem.getAge() > 2 && orderItem.getAge() < 13) { // 어린이 3~12세
+			orderItem.setAge(Staticvalue.AGE_CHILD);
+		} else if (orderItem.getAge() < 3) { // 유아 0~2세 
+			orderItem.setAge(Staticvalue.AGE_BABY);
+		} else if (orderItem.getAge() > 64) { // 노인 65세이상
+			orderItem.setAge(Staticvalue.AGE_ELDER);
 		} else { // 성인요금 
-			orderItem.age = Staticvalue.AGE_ADULT;
+			orderItem.setAge(Staticvalue.AGE_ADULT);
 		}
 	}
 	
 	//////////가격 계산
-	private void getPrice() {
+	private void calcPrice() {
 		int[][] priceList = {
 				{15000, 47000, 54000, 62000, 47000}, // 주간 종합이용권, 왼쪽부터 유아, 어린이, 청소년, 어른, 노인 순 
 				{15000, 36000, 43000, 50000, 36000}, // 야간 종합이용권
@@ -108,19 +108,19 @@ public class LotteWorld {
 				{15000, 35000, 41000, 47000, 35000}  // 야간 파크이용권 
 		};
 		
-		orderItem.price = priceList[orderItem.dayOrNight + 2 * orderItem.type - 3][orderItem.age] * orderItem.number; //해당하는 가격을 priceList에서 뽑아온후 갯수를 곱함 
+		orderItem.setPrice(priceList[orderItem.getDayOrNight() + 2 * orderItem.getType() - 3][orderItem.getAge()] * orderItem.getNumber()); //해당하는 가격을 priceList에서 뽑아온후 갯수를 곱함 
 		
-		if (orderItem.discount == Staticvalue.DISCOUNT_DISABLED || orderItem.discount == Staticvalue.DISCOUNT_VETERAN) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
-			orderItem.price = orderItem.price / 2; 
-		} else if (orderItem.discount == Staticvalue.DISCOUNT_SOLDIER && orderItem.type == Staticvalue.TYPE_ALL) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
-			orderItem.price = orderItem.price / 2 + 500;
-		} else if (orderItem.discount == Staticvalue.DISCOUNT_PREGNANT && orderItem.type == Staticvalue.TYPE_ALL) { // 임산부 종합이용권 50% 우대
-			orderItem.price = orderItem.price / 2;
-		} else if (orderItem.discount == Staticvalue.DISCOUNT_MULTICHILDS && orderItem.type == Staticvalue.TYPE_ALL) { // 다자녀 종합이용권 30% 우대 
-			orderItem.price = (int)(orderItem.price * 0.7);
+		if (orderItem.getDiscount() == Staticvalue.DISCOUNT_DISABLED || orderItem.getDiscount() == Staticvalue.DISCOUNT_VETERAN) { // 장애인, 국가유공자 종합/파크이용권 50% 우대 
+			orderItem.setPrice(orderItem.getPrice() / 2); 
+		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_SOLDIER && orderItem.getType() == Staticvalue.TYPE_ALL) { // 휴가장병 종합이용권 49% 우대 (가격표에선 실질적으로 50% 할인에 500원 추가로 되어있음.) 
+			orderItem.setPrice(orderItem.getPrice() / 2 + 500);
+		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_PREGNANT && orderItem.getType() == Staticvalue.TYPE_ALL) { // 임산부 종합이용권 50% 우대
+			orderItem.setPrice(orderItem.getPrice() / 2);
+		} else if (orderItem.getDiscount() == Staticvalue.DISCOUNT_MULTICHILDS && orderItem.getType() == Staticvalue.TYPE_ALL) { // 다자녀 종합이용권 30% 우대 
+			orderItem.setPrice((int)(orderItem.getPrice() * 0.7));
 		}
-		sum += orderItem.price; // 나중에 모든 인원의 주문이 끝났을때 출력하기위한 가격총합 
-		System.out.printf("가격은 %d 원 입니다.\n감사합니다.\n\n", orderItem.price); // 가격 출력 
+		sum += orderItem.getPrice(); // 나중에 모든 인원의 주문이 끝났을때 출력하기위한 가격총합 
+		System.out.printf("가격은 %d 원 입니다.\n감사합니다.\n\n", orderItem.getPrice()); // 가격 출력 
 	}
 	
 	////////// csv파일에 기록 + array에 저장
@@ -131,7 +131,7 @@ public class LotteWorld {
 		String[] discountList = {"없음", "장애인", "국가유공자", "휴가장병", "임산부", "다자녀"};
 		
 		try {
-			fw.write(Integer.toString(orderItem.timeRN) + ',' + dayOrNightList[orderItem.dayOrNight - 1] + ',' + typeList[orderItem.type - 1] + ',' + ageList[orderItem.age] + ',' + orderItem.number + ',' + orderItem.price + ',' + discountList[orderItem.discount - 1] + '\n');
+			fw.write(Integer.toString(orderItem.getTimeRN()) + ',' + dayOrNightList[orderItem.getDayOrNight() - 1] + ',' + typeList[orderItem.getType() - 1] + ',' + ageList[orderItem.getAge()] + ',' + orderItem.getNumber() + ',' + orderItem.getPrice() + ',' + discountList[orderItem.getDiscount() - 1] + '\n');
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -145,41 +145,41 @@ public class LotteWorld {
 		System.out.println("\n======================= 롯데월드 =======================");
 		int i = 0;
 		for (i = 0; i < orderList.size(); i++) {
-			if (orderList.get(i).dayOrNight == 1) {
+			if (orderList.get(i).getDayOrNight() == 1) {
 				System.out.printf("%-4s", "주간");
 			} else {
 				System.out.printf("%-4s", "야간");
 			}
 			
-			if (orderList.get(i).type == 1) {
+			if (orderList.get(i).getType() == 1) {
 				System.out.printf("%8s", "종합이용권");
 			} else {
 				System.out.printf("%8s", "파크이용권");
 			}
 			
-			if (orderList.get(i).age == Staticvalue.AGE_BABY) {
+			if (orderList.get(i).getAge() == Staticvalue.AGE_BABY) {
 				System.out.printf("%6s", "유아");
-			} else if (orderList.get(i).age == Staticvalue.AGE_CHILD) {
+			} else if (orderList.get(i).getAge() == Staticvalue.AGE_CHILD) {
 				System.out.printf("%6s", "어린이");
-			} else if (orderList.get(i).age == Staticvalue.AGE_TEEN) {
+			} else if (orderList.get(i).getAge() == Staticvalue.AGE_TEEN) {
 				System.out.printf("%6s", "청소년");
-			} else if (orderList.get(i).age == Staticvalue.AGE_ADULT) {
+			} else if (orderList.get(i).getAge() == Staticvalue.AGE_ADULT) {
 				System.out.printf("%6s", "성인");
 			} else {
 				System.out.printf("%6s", "노인");
 			}
 			
-			System.out.printf(" X %-2d %8d원   *우대적용 ", orderList.get(i).number, orderList.get(i).price);
+			System.out.printf(" X %-2d %8d원   *우대적용 ", orderList.get(i).getNumber(), orderList.get(i).getPrice());
 			
-			if (orderList.get(i).discount == 1) {
+			if (orderList.get(i).getDiscount() == 1) {
 				System.out.printf("%-7s\n", "없음");
-			} else if (orderList.get(i).discount == 2) {
+			} else if (orderList.get(i).getDiscount() == 2) {
 				System.out.printf("%-7s\n", "장애인");
-			} else if (orderList.get(i).discount == 3) {
+			} else if (orderList.get(i).getDiscount() == 3) {
 				System.out.printf("%-7s\n", "국가유공자");
-			} else if (orderList.get(i).discount == 4) {
+			} else if (orderList.get(i).getDiscount() == 4) {
 				System.out.printf("%-7s\n", "휴가장병");
-			} else if (orderList.get(i).discount == 5) {
+			} else if (orderList.get(i).getDiscount() == 5) {
 				System.out.printf("%-7s\n", "임산부");
 			} else {
 				System.out.printf("%7s\n", "다자녀");
@@ -195,8 +195,7 @@ public class LotteWorld {
 	}
 	
 	////////// 메인함수
-	public static void main(String[] args) throws IOException {
-		LotteWorld lw = new LotteWorld();
+	void startSystem() throws IOException {
 		int anotherOne, anotherOrder = 0;
 		
 		do { // 새로운주문을 받는 반복문 
@@ -204,16 +203,16 @@ public class LotteWorld {
 			fw.write("날짜,시간대,권종,연령구분,수량,가격,우대사항\n");
 			
 			do {
-				lw.printMenu();
-				lw.getAge();
-				lw.getPrice();
-				lw.writeIt();
+				printMenu();
+				calcAge();
+				calcPrice();
+				writeIt();
 				
 				System.out.print("계속 발권 하시겠습니까?\n1. 티켓 발권\n2. 종료\n->");
 				anotherOne = sc.nextInt();
 			} while (anotherOne != 2); // 하나의 주문 안에서 다른 사람을 받는 반복문 
 			
-			lw.printIt();
+			printIt();
 			
 			System.out.print("\n\n계속 진행 (1: 새로운 주문, 2: 프로그램 종료) : ");
 			anotherOrder = sc.nextInt();
