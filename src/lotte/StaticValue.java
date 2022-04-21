@@ -1,6 +1,6 @@
 package lotte;
 
-public final class Staticvalue {
+public final class StaticValue {
 	public static final int DAYORNIGHT_DAY = 1;
 	public static final int DAYORNIGHT_NIGHT = 2;
 	
@@ -25,5 +25,7 @@ public final class Staticvalue {
 	public static final int DISCOUNT_SOLDIER = 4;
 	public static final int DISCOUNT_PREGNANT = 5;
 	public static final int DISCOUNT_MULTICHILDS = 6;
+	
+	public static final String FILENAME= "C:\\Users\\user\\Documents\\LotteReport.csv";
 	
 }

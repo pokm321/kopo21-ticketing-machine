@@ -8,7 +8,8 @@ public class OrderData {
 	private int age; // 나이 (연령타입)
 	private int price; // 가격
 	private int timeRN; // 현재날짜
-	
+	private int ssn;
+	private int ssn_t;
 	
 	// getters and setters
 	public int getDayOrNight() {
@@ -52,6 +53,18 @@ public class OrderData {
 	}
 	public void setTimeRN(int timeRN) {
 		this.timeRN = timeRN;
+	}
+	public int getSsn() {
+		return ssn;
+	}
+	public void setSsn(int ssn) {
+		this.ssn = ssn;
+	}
+	public int getSsn_t() {
+		return ssn_t;
+	}
+	public void setSsn_t(int ssn_t) {
+		this.ssn_t = ssn_t;
 	}
 
 }
