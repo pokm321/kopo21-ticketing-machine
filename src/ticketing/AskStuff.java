@@ -1,17 +1,16 @@
-package lotte;
+package ticketing;
 
 import java.util.Scanner;
 
 public class AskStuff {
+	Scanner sc = new Scanner(System.in);
 	
 	private static void errorMsg() {
 		System.out.println("정확한 값을 입력해주세요.");
 	}
-	
+
 	//////////메뉴 출력 
 	protected void printMenu(OrderData orderItem) {
-		Scanner sc = new Scanner(System.in);
-		
 		do {
 			System.out.print("시간대를 선택하세요.\n1. 주간권\n2. 야간권 (4시 이후 입장시)\n-> ");
 			orderItem.setDayOrNight(sc.nextInt());
@@ -55,5 +54,15 @@ public class AskStuff {
 				errorMsg();
 			}
 		} while (orderItem.getDiscount() < StaticValue.DISCOUNT_MIN || orderItem.getDiscount() > StaticValue.DISCOUNT_MAX);
+	}
+	
+	protected void askRepeat1(OrderData orderItem) {
+		System.out.print("계속 발권 하시겠습니까?\n1. 티켓 발권\n2. 종료\n->");
+		orderItem.setAnotherOne(sc.nextInt());
+	}
+	
+	protected void askRepeat2(OrderData orderItem) {
+		System.out.print("\n\n계속 진행 (1: 새로운 주문, 2: 프로그램 종료) : ");
+		orderItem.setAnotherOrder(sc.nextInt());
 	}
 }

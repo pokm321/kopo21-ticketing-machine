@@ -1,4 +1,4 @@
-package lotte;
+package ticketing;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -92,6 +92,7 @@ public class PrintStuff {
 		
 		System.out.printf("\n입장료 총액은 %d원 입니다.\n", sum);
 		System.out.print("======================================================");
+		orderList.clear();
 	}
 	
 	protected void closeFileWriter() throws IOException {

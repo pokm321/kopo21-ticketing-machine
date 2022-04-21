@@ -1,4 +1,4 @@
-package lotte;
+package ticketing;
 
 public class OrderData {
 	private int dayOrNight; // 권종
@@ -10,6 +10,8 @@ public class OrderData {
 	private int timeRN; // 현재날짜
 	private int ssn;
 	private int ssn_t;
+	private int anotherOne;
+	private int anotherOrder;
 	
 	// getters and setters
 	public int getDayOrNight() {
@@ -65,6 +67,18 @@ public class OrderData {
 	}
 	public void setSsn_t(int ssn_t) {
 		this.ssn_t = ssn_t;
+	}
+	public int getAnotherOne() {
+		return anotherOne;
+	}
+	public void setAnotherOne(int anotherOne) {
+		this.anotherOne = anotherOne;
+	}
+	public int getAnotherOrder() {
+		return anotherOrder;
+	}
+	public void setAnotherOrder(int anotherOrder) {
+		this.anotherOrder = anotherOrder;
 	}
 
 }

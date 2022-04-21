@@ -1,10 +1,10 @@
-package lotte;
+package ticketing;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class CalculateStuff {
-	
+
 	//////////만나이 구한뒤 어른/어린이/청소년 여부 파악 
 	protected void calcAge(OrderData orderItem) {
 		LocalDate now = LocalDate.now();
@@ -55,4 +55,7 @@ public class CalculateStuff {
 		}
 		System.out.printf("가격은 %d 원 입니다.\n감사합니다.\n\n", orderItem.getPrice()); // 가격 출력 
 	}
+	
+	
+	
 }
