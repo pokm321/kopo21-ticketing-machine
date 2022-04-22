@@ -5,10 +5,10 @@
 ## Class 소개
 
 티켓팅 머신은 두가지의 패키지로 나누어져있습니다:
-- 티켓팅 머신 Ticketing Machine
+- 티켓팅 Ticketing
 - 데이터 분석 Data Analysis
 
-### 티켓팅 머신 Ticketing Machine
+### 티켓팅 Ticketing 
 사용자의 입력을 받아 티켓결과를 출력하고 csv파일에 기록합니다.
 ```
 LotteWorldTicketing.java : 프로그램의 시작을 담당하고, TicketSystem.java 클래스를 불러옵니다.
