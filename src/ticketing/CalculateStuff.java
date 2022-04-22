@@ -5,57 +5,54 @@ import java.time.format.DateTimeFormatter;
 
 public class CalculateStuff {
 
-	//////////¸¸³ªÀÌ ±¸ÇÑµÚ ¾î¸¥/¾î¸°ÀÌ/Ã»¼Ò³â ¿©ºÎ ÆÄ¾Ç 
+	//////////ë§Œë‚˜ì´ êµ¬í•œë’¤ ì–´ë¥¸/ì–´ë¦°ì´/ì²­ì†Œë…„ ì—¬ë¶€ íŒŒì•… 
 	protected void calcAge(OrderData orderItem) {
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
 		
 		orderItem.setTimeRN(Integer.parseInt(now.format(df)));
 		
-		if (orderItem.getSsn_t() == 1 || orderItem.getSsn_t() == 2) { //ssn_t°¡ 1ÀÌ³ª 2¸é 2000³â ÀÌÀü Ãâ»ı, 
-			orderItem.setSsn(orderItem.getSsn() + 19000000); // ssn Àº ÁÖ¹Î¹øÈ£ ¾ÕÀÚ¸®, °Å±â¿¡ ´õÇÑ ¼ıÀÚ´Â 950522¸¦ 19950522·Î ¹Ù²ãÁÜ 
-		} else { //ssn_t°¡ 3ÀÌ³ª 4¸é 2000³â ÀÌÈÄ Ãâ»ı 
-			orderItem.setSsn(orderItem.getSsn() + 20000000); // 020123À» 20020123À¸·Î ¹Ù²Û´Ù. 
+		if (orderItem.getSsn_t() == 1 || orderItem.getSsn_t() == 2) { //ssn_tê°€ 1ì´ë‚˜ 2ë©´ 2000ë…„ ì´ì „ ì¶œìƒ, 
+			orderItem.setSsn(orderItem.getSsn() + 19000000); // ssn ì€ ì£¼ë¯¼ë²ˆí˜¸ ì•ìë¦¬, ê±°ê¸°ì— ë”í•œ ìˆ«ìëŠ” 950522ë¥¼ 19950522ë¡œ ë°”ê¿”ì¤Œ 
+		} else { //ssn_tê°€ 3ì´ë‚˜ 4ë©´ 2000ë…„ ì´í›„ ì¶œìƒ 
+			orderItem.setSsn(orderItem.getSsn() + 20000000); // 020123ì„ 20020123ìœ¼ë¡œ ë°”ê¾¼ë‹¤. 
 		}
 		
-		orderItem.setAge((orderItem.getTimeRN() - orderItem.getSsn()) / 10000); // ¸¸³ªÀÌ 
+		orderItem.setAge((orderItem.getTimeRN() - orderItem.getSsn()) / 10000); // ë§Œë‚˜ì´ 
 		
-		if (orderItem.getAge() > 12 && orderItem.getAge() < 19) { // Ã»¼Ò³â 13~18¼¼ 
+		if (orderItem.getAge() > 12 && orderItem.getAge() < 19) { // ì²­ì†Œë…„ 13~18ì„¸ 
 			orderItem.setAge(StaticValue.AGE_TEEN);
-		} else if (orderItem.getAge() > 2 && orderItem.getAge() < 13) { // ¾î¸°ÀÌ 3~12¼¼
+		} else if (orderItem.getAge() > 2 && orderItem.getAge() < 13) { // ì–´ë¦°ì´ 3~12ì„¸
 			orderItem.setAge(StaticValue.AGE_CHILD);
-		} else if (orderItem.getAge() < 3) { // À¯¾Æ 0~2¼¼ 
+		} else if (orderItem.getAge() < 3) { // ìœ ì•„ 0~2ì„¸ 
 			orderItem.setAge(StaticValue.AGE_BABY);
-		} else if (orderItem.getAge() > 64) { // ³ëÀÎ 65¼¼ÀÌ»ó
+		} else if (orderItem.getAge() > 64) { // ë…¸ì¸ 65ì„¸ì´ìƒ
 			orderItem.setAge(StaticValue.AGE_ELDER);
-		} else { // ¼ºÀÎ¿ä±İ 
+		} else { // ì„±ì¸ìš”ê¸ˆ 
 			orderItem.setAge(StaticValue.AGE_ADULT);
 		}
 	}
 	
-	//////////°¡°İ °è»ê
+	//////////ê°€ê²© ê³„ì‚°
 	protected void calcPrice(OrderData orderItem) {
 		int[][] priceList = {
-				{15000, 47000, 54000, 62000, 47000}, // ÁÖ°£ Á¾ÇÕÀÌ¿ë±Ç, ¿ŞÂÊºÎÅÍ À¯¾Æ, ¾î¸°ÀÌ, Ã»¼Ò³â, ¾î¸¥, ³ëÀÎ ¼ø 
-				{15000, 36000, 43000, 50000, 36000}, // ¾ß°£ Á¾ÇÕÀÌ¿ë±Ç
-				{15000, 46000, 52000, 59000, 46000}, // ÁÖ°£ ÆÄÅ©ÀÌ¿ë±Ç 
-				{15000, 35000, 41000, 47000, 35000}  // ¾ß°£ ÆÄÅ©ÀÌ¿ë±Ç 
+				{15000, 47000, 54000, 62000, 47000}, // ì£¼ê°„ ì¢…í•©ì´ìš©ê¶Œ, ì™¼ìª½ë¶€í„° ìœ ì•„, ì–´ë¦°ì´, ì²­ì†Œë…„, ì–´ë¥¸, ë…¸ì¸ ìˆœ 
+				{15000, 36000, 43000, 50000, 36000}, // ì•¼ê°„ ì¢…í•©ì´ìš©ê¶Œ
+				{15000, 46000, 52000, 59000, 46000}, // ì£¼ê°„ íŒŒí¬ì´ìš©ê¶Œ 
+				{15000, 35000, 41000, 47000, 35000}  // ì•¼ê°„ íŒŒí¬ì´ìš©ê¶Œ 
 		};
 		
-		orderItem.setPrice(priceList[orderItem.getDayOrNight() + 2 * orderItem.getType() - 3][orderItem.getAge()] * orderItem.getNumber()); //ÇØ´çÇÏ´Â °¡°İÀ» priceList¿¡¼­ »Ì¾Æ¿ÂÈÄ °¹¼ö¸¦ °öÇÔ 
+		orderItem.setPrice(priceList[orderItem.getDayOrNight() + 2 * orderItem.getType() - 3][orderItem.getAge()] * orderItem.getNumber()); //í•´ë‹¹í•˜ëŠ” ê°€ê²©ì„ priceListì—ì„œ ë½‘ì•„ì˜¨í›„ ê°¯ìˆ˜ë¥¼ ê³±í•¨ 
 		
-		if (orderItem.getDiscount() == StaticValue.DISCOUNT_DISABLED || orderItem.getDiscount() == StaticValue.DISCOUNT_VETERAN) { // Àå¾ÖÀÎ, ±¹°¡À¯°øÀÚ Á¾ÇÕ/ÆÄÅ©ÀÌ¿ë±Ç 50% ¿ì´ë 
+		if (orderItem.getDiscount() == StaticValue.DISCOUNT_DISABLED || orderItem.getDiscount() == StaticValue.DISCOUNT_VETERAN) { // ì¥ì• ì¸, êµ­ê°€ìœ ê³µì ì¢…í•©/íŒŒí¬ì´ìš©ê¶Œ 50% ìš°ëŒ€ 
 			orderItem.setPrice(orderItem.getPrice() / 2); 
-		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_SOLDIER && orderItem.getType() == StaticValue.TYPE_ALL) { // ÈŞ°¡Àåº´ Á¾ÇÕÀÌ¿ë±Ç 49% ¿ì´ë (°¡°İÇ¥¿¡¼± ½ÇÁúÀûÀ¸·Î 50% ÇÒÀÎ¿¡ 500¿ø Ãß°¡·Î µÇ¾îÀÖÀ½.) 
+		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_SOLDIER && orderItem.getType() == StaticValue.TYPE_ALL) { // íœ´ê°€ì¥ë³‘ ì¢…í•©ì´ìš©ê¶Œ 49% ìš°ëŒ€ (ê°€ê²©í‘œì—ì„  ì‹¤ì§ˆì ìœ¼ë¡œ 50% í• ì¸ì— 500ì› ì¶”ê°€ë¡œ ë˜ì–´ìˆìŒ.) 
 			orderItem.setPrice(orderItem.getPrice() / 2 + 500);
-		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_PREGNANT && orderItem.getType() == StaticValue.TYPE_ALL) { // ÀÓ»êºÎ Á¾ÇÕÀÌ¿ë±Ç 50% ¿ì´ë
+		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_PREGNANT && orderItem.getType() == StaticValue.TYPE_ALL) { // ì„ì‚°ë¶€ ì¢…í•©ì´ìš©ê¶Œ 50% ìš°ëŒ€
 			orderItem.setPrice(orderItem.getPrice() / 2);
-		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_MULTICHILDS && orderItem.getType() == StaticValue.TYPE_ALL) { // ´ÙÀÚ³à Á¾ÇÕÀÌ¿ë±Ç 30% ¿ì´ë 
+		} else if (orderItem.getDiscount() == StaticValue.DISCOUNT_MULTICHILDS && orderItem.getType() == StaticValue.TYPE_ALL) { // ë‹¤ìë…€ ì¢…í•©ì´ìš©ê¶Œ 30% ìš°ëŒ€ 
 			orderItem.setPrice((int)(orderItem.getPrice() * 0.7));
 		}
-		System.out.printf("°¡°İÀº %d ¿ø ÀÔ´Ï´Ù.\n°¨»çÇÕ´Ï´Ù.\n\n", orderItem.getPrice()); // °¡°İ Ãâ·Â 
-	}
-	
-	
-	
+		System.out.printf("ê°€ê²©ì€ %d ì› ì…ë‹ˆë‹¤.\nê°ì‚¬í•©ë‹ˆë‹¤.\n\n", orderItem.getPrice()); // ê°€ê²© ì¶œë ¥ 
+	}	
 }
