@@ -28,7 +28,7 @@ PrintStuff.java : 출력 클래스, 출력값을 print하고 csv파일에 기록
 ```
 ####
 ```
-OrderData.java : 출력값을 위한 상수가 모여있는 클래스
+OrderData.java : 출력값을 위한 변수가 모여있는 클래스
 ```
 ```
 StaticValue.java : 변하지않는 상수가 모여있는 클래스
