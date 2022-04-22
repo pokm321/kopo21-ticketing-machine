@@ -4,9 +4,9 @@
 
 ## Class 소개
 
-티켓팅 머신은 두가지의 패키지로 나누어져있습니다:\
-Ticketing Machine\
-Data Analysis
+티켓팅 머신은 두가지의 패키지로 나누어져있습니다:
+- 티켓팅 머신 Ticketing Machine
+- 데이터 분석 Data Analysis
 
 ### 티켓팅 머신 Ticketing Machine
 사용자의 입력을 받아 티켓결과를 출력하고 csv파일에 기록합니다.
