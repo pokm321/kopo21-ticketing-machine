@@ -18,13 +18,13 @@ TicketSystem.java : main 클래스로 실행되는, 반복문과 함수를 부�
 ```
 ####
 ```
-AskStuff.java : 사용자에게 여러가지를 물어보는 함수가 담긴 클래스
+AskStuff.java : 입력 클래스, 사용자에게 여러가지를 물어보는 함수가 담긴 클래스
 ```
 ```
-CalculateStuff.java : 받은 입력값으로 출력값을 계산하는 클래스
+CalculateStuff.java : 계산 클래스, 받은 입력값으로 출력값을 계산하는 클래스
 ```
 ```
-PrintStuff.java : 출력값을 print하고 csv파일에 기록하는 클래스
+PrintStuff.java : 출력 클래스, 출력값을 print하고 csv파일에 기록하는 클래스
 ```
 ####
 ```
