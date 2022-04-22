@@ -53,13 +53,13 @@ WriteStuff.java : 결과값을 csv파일에 기록하는 클래스
 
 ## 실행화면
 
-### Ticketing Machine
+### 티켓팅 Ticketing 
 
 ![image](https://user-images.githubusercontent.com/31551276/164574649-4548f3f5-7c76-4285-8200-bb5fb6298c3e.png)\
 ![image](https://user-images.githubusercontent.com/31551276/164574764-2baa625b-2baf-4488-99e7-cf089d134fff.png)\
 ![image](https://user-images.githubusercontent.com/31551276/164574993-93d80715-60cf-4bbc-89e0-403aca089c7f.png)
 
-### Data Analysis
+### 데이터 분석 Data Analysis
 
 ![image](https://user-images.githubusercontent.com/31551276/164575257-f9b46340-1eb5-48b9-991d-200c84dc5df5.png)\
 ![image](https://user-images.githubusercontent.com/31551276/164575274-443d63bd-fb8f-420f-a26f-d1f95a01dfe4.png)\
