@@ -8,7 +8,7 @@
 Ticketing Machine\
 Data Analysis
 
-### Ticketing Machine
+### Ticketing Machine 티켓팅 머신
 사용자의 입력을 받아 티켓결과를 출력하고 csv파일에 기록합니다.
 ```
 LotteWorldTicketing.java : 프로그램의 시작을 담당하고, TicketSystem.java 클래스를 불러옵니다.
@@ -37,11 +37,11 @@ StaticValue.java : 변하지않는 상수가 모여있는 클래스
 
 
 
-### Data Analysis
+### Data Analysis 데이터 분석
 기록된 csv파일을 바탕으로 여러형태의 데이터를 출력하고 다른 csv파일들에 나누어 다시 기록합니다.
 
 ```
-DataAnalysis.java : 함수를 부르는 클래스
+DataAnalysis.java : 프로그램의 시작을 담당하고, 함수를 부릅니다.
 ```
 ####
 ```
