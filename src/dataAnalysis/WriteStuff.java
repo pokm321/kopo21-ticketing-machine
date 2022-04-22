@@ -23,7 +23,7 @@ public class WriteStuff {
 		int sum = 0;
 		String dateOfUpperLine = "";
 		
-		fw.write("¿œ¿⁄,√— ∏≈√‚\n");
+		fw.write("ÏùºÏûê,Ï¥ù Îß§Ï∂ú\n");
 		br.readLine();
 		
 		while ((line = br.readLine()) != null) {
@@ -34,7 +34,7 @@ public class WriteStuff {
 					fw.write(sum + "\n");
 				}
 				fw.write(lineArray[0].substring(0, 4) + "-" + lineArray[0].substring(4, 6) + "-" + lineArray[0].substring(6) + ",");
-				sum = Integer.parseInt(lineArray[5]); // √— ∏≈√‚ ∞ËªÍ 
+				sum = Integer.parseInt(lineArray[5]); // Ï¥ù Îß§Ï∂ú Í≥ÑÏÇ∞ 
 				dateOfUpperLine = lineArray[0]; 
 			} else {
 				sum += Integer.parseInt(lineArray[5]);
@@ -57,37 +57,37 @@ public class WriteStuff {
 		int[] dataNight = new int[StaticValue.AGE_NUM_OF_CHOICES];
 		int revenueDay = 0;
 		int revenueNight = 0;
-		fw.write("±∏∫–,¡÷∞£±«,æﬂ∞£±«\n");
+		fw.write("Íµ¨Î∂Ñ,Ï£ºÍ∞ÑÍ∂å,ÏïºÍ∞ÑÍ∂å\n");
 		
 		while ((line = br.readLine()) != null) {
 			String[] lineArray = line.split(",");
 
-			if (lineArray[1].equals("¡÷∞£")) {
+			if (lineArray[1].equals("Ï£ºÍ∞Ñ")) {
 				revenueDay += Integer.parseInt(lineArray[5]);
 				
-				if (lineArray[3].equals("¿Øæ∆")) {
+				if (lineArray[3].equals("Ïú†ÏïÑ")) {
 					dataDay[StaticValue.AGE_BABY] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("æÓ∏∞¿Ã")) {
+				} else if (lineArray[3].equals("Ïñ¥Î¶∞Ïù¥")) {
 					dataDay[StaticValue.AGE_CHILD] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("√ªº“≥‚")) {
+				} else if (lineArray[3].equals("Ï≤≠ÏÜåÎÖÑ")) {
 					dataDay[StaticValue.AGE_TEEN] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("º∫¿Œ")) {
+				} else if (lineArray[3].equals("ÏÑ±Ïù∏")) {
 					dataDay[StaticValue.AGE_ADULT] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("≥Î¿Œ")) {
+				} else if (lineArray[3].equals("ÎÖ∏Ïù∏")) {
 					dataDay[StaticValue.AGE_ELDER] += Integer.parseInt(lineArray[4]);
 				}
-			} else if (lineArray[1].equals("æﬂ∞£")) {
+			} else if (lineArray[1].equals("ÏïºÍ∞Ñ")) {
 				revenueNight += Integer.parseInt(lineArray[5]);
 				
-				if (lineArray[3].equals("¿Øæ∆")) {
+				if (lineArray[3].equals("Ïú†ÏïÑ")) {
 					dataNight[StaticValue.AGE_BABY] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("æÓ∏∞¿Ã")) {
+				} else if (lineArray[3].equals("Ïñ¥Î¶∞Ïù¥")) {
 					dataNight[StaticValue.AGE_CHILD] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("√ªº“≥‚")) {
+				} else if (lineArray[3].equals("Ï≤≠ÏÜåÎÖÑ")) {
 					dataNight[StaticValue.AGE_TEEN] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("º∫¿Œ")) {
+				} else if (lineArray[3].equals("ÏÑ±Ïù∏")) {
 					dataNight[StaticValue.AGE_ADULT] += Integer.parseInt(lineArray[4]);
-				} else if (lineArray[3].equals("≥Î¿Œ")) {
+				} else if (lineArray[3].equals("ÎÖ∏Ïù∏")) {
 					dataNight[StaticValue.AGE_ELDER] += Integer.parseInt(lineArray[4]);
 				}
 			} 
@@ -102,13 +102,13 @@ public class WriteStuff {
 		for (int i = 0; i < StaticValue.AGE_NUM_OF_CHOICES; i++) {
 			numOfNightTickets += dataNight[i];
 		}
-		fw.write("¿Øæ∆," + dataDay[0] + "," + dataNight[0] + "\n");
-		fw.write("æÓ∏∞¿Ã," + dataDay[1] + "," + dataNight[1] + "\n");
-		fw.write("√ªº“≥‚," + dataDay[2] + "," + dataNight[2] + "\n");
-		fw.write("æÓ∏•," + dataDay[3] + "," + dataNight[3] + "\n");
-		fw.write("≥Î¿Œ," + dataDay[4] + "," + dataNight[4] + "\n");
-		fw.write("«’∞Ë" + numOfDayTickets + "," + numOfNightTickets + "\n");
-		fw.write("∏≈√‚," + revenueDay + "," + revenueNight + "\n");
+		fw.write("Ïú†ÏïÑ," + dataDay[0] + "," + dataNight[0] + "\n");
+		fw.write("Ïñ¥Î¶∞Ïù¥," + dataDay[1] + "," + dataNight[1] + "\n");
+		fw.write("Ï≤≠ÏÜåÎÖÑ," + dataDay[2] + "," + dataNight[2] + "\n");
+		fw.write("Ïñ¥Î•∏," + dataDay[3] + "," + dataNight[3] + "\n");
+		fw.write("ÎÖ∏Ïù∏," + dataDay[4] + "," + dataNight[4] + "\n");
+		fw.write("Ìï©Í≥Ñ" + numOfDayTickets + "," + numOfNightTickets + "\n");
+		fw.write("Îß§Ï∂ú," + revenueDay + "," + revenueNight + "\n");
 
 		br.close();
 		fw.close();
@@ -122,22 +122,21 @@ public class WriteStuff {
 		String line;
 		int sum = 0;
 		int[] numOfTickets = new int[StaticValue.DISCOUNT_NUM_OF_CHOICES];
-		
-		System.out.print("===== øÏ¥Î±« ∆«∏≈ «ˆ»≤ =====\n");
+
 		while ((line = br.readLine()) != null) {
 			String[] lineArray = line.split(",");
 			
-			if (lineArray[6].equals("æ¯¿Ω")) {
+			if (lineArray[6].equals("ÏóÜÏùå")) {
 				numOfTickets[StaticValue.DISCOUNT_NONE - 1] += Integer.parseInt(lineArray[4]);
-			} else if (lineArray[6].equals("¿Âæ÷¿Œ")) {
+			} else if (lineArray[6].equals("Ïû•Ïï†Ïù∏")) {
 				numOfTickets[StaticValue.DISCOUNT_DISABLED - 1] += Integer.parseInt(lineArray[4]);
-			} else if (lineArray[6].equals("±π∞°¿Ø∞¯¿⁄")) {
+			} else if (lineArray[6].equals("Íµ≠Í∞ÄÏú†Í≥µÏûê")) {
 				numOfTickets[StaticValue.DISCOUNT_VETERAN - 1] += Integer.parseInt(lineArray[4]);
-			} else if (lineArray[6].equals("»ﬁ∞°¿Â∫¥")) {
+			} else if (lineArray[6].equals("Ìú¥Í∞ÄÏû•Î≥ë")) {
 				numOfTickets[StaticValue.DISCOUNT_SOLDIER - 1] += Integer.parseInt(lineArray[4]);
-			} else if (lineArray[6].equals("¿”ªÍ∫Œ")) {
+			} else if (lineArray[6].equals("ÏûÑÏÇ∞Î∂Ä")) {
 				numOfTickets[StaticValue.DISCOUNT_PREGNANT - 1] += Integer.parseInt(lineArray[4]);
-			} else if (lineArray[6].equals("¥Ÿ¿⁄≥‡")) {
+			} else if (lineArray[6].equals("Îã§ÏûêÎÖÄ")) {
 				numOfTickets[StaticValue.DISCOUNT_MULTICHILDS - 1] += Integer.parseInt(lineArray[4]);
 			}
 		}
@@ -146,13 +145,13 @@ public class WriteStuff {
 			sum += numOfTickets[i];
 		}
 		
-		fw.write("√— ∆«∏≈ ∆ºƒœºˆ," + sum + "\n");
-		fw.write("øÏ¥Î æ¯¿Ω," + numOfTickets[StaticValue.DISCOUNT_NONE - 1] + "\n");
-		fw.write("¿Âæ÷¿Œ," + numOfTickets[StaticValue.DISCOUNT_DISABLED - 1] + "\n");
-		fw.write("±π∞°¿Ø∞¯¿⁄," + numOfTickets[StaticValue.DISCOUNT_VETERAN - 1] + "\n");
-		fw.write("»ﬁ∞°¿Â∫¥," + numOfTickets[StaticValue.DISCOUNT_SOLDIER - 1] + "\n");
-		fw.write("¿”ªÍ∫Œ," + numOfTickets[StaticValue.DISCOUNT_PREGNANT - 1] + "\n");
-		fw.write("¥Ÿ¿⁄≥‡," + numOfTickets[StaticValue.DISCOUNT_MULTICHILDS - 1] + "\n");
+		fw.write("Ï¥ù ÌåêÎß§ Ìã∞ÏºìÏàò," + sum + "\n");
+		fw.write("Ïö∞ÎåÄ ÏóÜÏùå," + numOfTickets[StaticValue.DISCOUNT_NONE - 1] + "\n");
+		fw.write("Ïû•Ïï†Ïù∏," + numOfTickets[StaticValue.DISCOUNT_DISABLED - 1] + "\n");
+		fw.write("Íµ≠Í∞ÄÏú†Í≥µÏûê," + numOfTickets[StaticValue.DISCOUNT_VETERAN - 1] + "\n");
+		fw.write("Ìú¥Í∞ÄÏû•Î≥ë," + numOfTickets[StaticValue.DISCOUNT_SOLDIER - 1] + "\n");
+		fw.write("ÏûÑÏÇ∞Î∂Ä," + numOfTickets[StaticValue.DISCOUNT_PREGNANT - 1] + "\n");
+		fw.write("Îã§ÏûêÎÖÄ," + numOfTickets[StaticValue.DISCOUNT_MULTICHILDS - 1] + "\n");
 		
 		br.close();
 		fw.close();
