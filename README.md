@@ -14,7 +14,7 @@
 LotteWorldTicketing.java : 프로그램의 시작을 담당하고, TicketSystem.java 클래스를 불러옵니다.
 ```
 ```
-TicketSystem.java : main 클래스로 실행되는, 반복문과 함수를 부르는 클래스
+TicketSystem.java : 반복문과 함수를 불러서 전체를 제어하는 클래스
 ```
 ####
 ```
