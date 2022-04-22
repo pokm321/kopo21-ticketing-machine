@@ -68,4 +68,4 @@ WriteStuff.java : 결과값을 csv파일에 기록하는 클래스
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
